@@ -38,11 +38,11 @@ inquirer
         }
     ])
     .then(function (answers) {
-        var newManager = new Manager(answers.managerName, answers.managerId, answer.managerEmail, managerNumber);
+        var newManager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerNumber);
         employees.push(newManager);
         var exit = false;
-    }
-const result = render.render(employees);
+    })
+
 
 
 // Write code to use inquirer to gather information about the development team members,
@@ -68,8 +68,8 @@ const result = render.render(employees);
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
 
-// Recursion example
 function moreEmployees() {
+    
     inquirer
         .prompt([
             {
@@ -89,6 +89,8 @@ function moreEmployees() {
                 inquirer
                     .prompt(internQuestions);
                 moreEmployees();
+            } else {
+                console.log("Thanks for your selection(s)!")
             }
         })
 
@@ -117,26 +119,40 @@ function moreEmployees() {
         }
 
     ]).then(function (answers) {
-        var newEngineer = new Employee(answers.engineerName, answers.engineerId, answer.engineerEmail, engineerGitHub);
-        employees.push(newManager);
+        var newEngineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGitHub);
+        employees.push(newEngineer);
+        var exit = false;
+    })
+        
+    const internQuestions = ([
+        {
+            type: "input",
+            message: "What is your intern's name?",
+            name: "internName"
+        },
+        {
+            type: "input",
+            message: "What is your intern's id?",
+            name: "internId"
+        },
+        {
+            type: "input",
+            message: "What is your intern's email?",
+            name: "internEmail"
+        },
+        {
+            type: "input",
+            message: "What is your intern's school?",
+            name: "internSchool"
+        }
+
+    ]).then(function (answers) {
+        var newIntern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
+        employees.push(newIntern);
         var exit = false;
     }
-
+      
 }
 
-
-        // Create engineer inquirer prompt
-        inquirer // 3
-    var newEngineer = new Engineer(answers.name...)
-    // push to employees
-    moreEmployees();
-    // B. Intern
-    // Create an intern inquirer
-    inquirer // 4
-    var newIntern = new Intern(answers.name...)
-    moreEmployees();
-    // push to employees
-    // C. I don't want to add anymore
-    // Escape the loop
-}
 moreEmployees();
+const result = render.render(employees);
