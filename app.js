@@ -69,7 +69,7 @@ inquirer
 // for the provided `render` function to work! ```
 
 function moreEmployees() {
-    
+
     inquirer
         .prompt([
             {
@@ -123,7 +123,7 @@ function moreEmployees() {
         employees.push(newEngineer);
         var exit = false;
     })
-        
+
     const internQuestions = ([
         {
             type: "input",
@@ -150,8 +150,8 @@ function moreEmployees() {
         var newIntern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
         employees.push(newIntern);
         var exit = false;
-    }
-      
+    })
+
 }
 
 moreEmployees();
