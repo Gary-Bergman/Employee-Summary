@@ -10,31 +10,59 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+
 var employees = [];
 
 function manager() {
+
+    // const passNum = answers.match(/^[1-9]\d*$/);
+    // const passEmail = answers.match(/\S+@\S+\.\S+/);
     console.log("Please build your team.");
     inquirer
         .prompt([
             {
                 type: "input",
                 message: "What is your manager's name?",
-                name: "managerName"
+                name: "managerName",
+                validate: answers => {
+                    if (answers !== "") {
+                        return true;
+                    }
+                    return "Please enter at least one character.";
+                }
             },
             {
                 type: "input",
                 message: "What is your manager's id?",
-                name: "managerId"
+                name: "managerId",
+                validate: answers => {
+                    if (answers.match(/^[1-9]\d*$/)) {
+                        return true;
+                    }
+                    return "Please enter at least one number.";
+                }
             },
             {
                 type: "input",
                 message: "What is your manager's email?",
-                name: "managerEmail"
+                name: "managerEmail",
+                validate: answers => {
+                    if (answers.match(/\S+@\S+\.\S+/)) {
+                        return true;
+                    }
+                    return "Please enter a valid email address.";
+                }
             },
             {
                 type: "input",
                 message: "What is your manager's office number?",
-                name: "managerNumber"
+                name: "managerNumber",
+                validate: answers => {
+                    if (answers.match(/^[1-9]\d*$/)) {
+                        return true;
+                    }
+                    return "Please enter at least one number.";
+                }
             }
         ])
         .then(function (answers) {
@@ -56,22 +84,46 @@ function moreEmployees() {
         {
             type: "input",
             message: "What is your engineer's name?",
-            name: "engineerName"
+            name: "engineerName",
+            validate: answers => {
+                if (answers !== "") {
+                    return true;
+                }
+                return "Please enter at least one character.";
+            }
         },
         {
             type: "input",
             message: "What is your engineer's id?",
-            name: "engineerId"
+            name: "engineerId",
+            validate: answers => {
+                if (answers.match(/^[1-9]\d*$/)) {
+                    return true;
+                }
+                return "Please enter at least one number.";
+            }
         },
         {
             type: "input",
             message: "What is your engineer's email?",
-            name: "engineerEmail"
+            name: "engineerEmail",
+            validate: answers => {
+                if (answers.match(/\S+@\S+\.\S+/)) {
+                    return true;
+                }
+                return "Please enter a valid email address.";
+            }
         },
         {
             type: "input",
             message: "What is your engineer's GitHub username?",
-            name: "engineerGithub"
+            name: "engineerGithub",
+            validate: answers => {
+                if (answers !== "") {
+                    return true;
+                }
+                return "Please enter at least one character.";
+            }
         }
     ])
 
@@ -79,22 +131,46 @@ function moreEmployees() {
         {
             type: "input",
             message: "What is your intern's name?",
-            name: "internName"
+            name: "internName",
+            validate: answers => {
+                if (answers !== "") {
+                    return true;
+                }
+                return "Please enter at least one character.";
+            }
         },
         {
             type: "input",
             message: "What is your intern's id?",
-            name: "internId"
+            name: "internId",
+            validate: answers => {
+                if (answers.match(/^[1-9]\d*$/)) {
+                    return true;
+                }
+                return "Please enter at least one number.";
+            }
         },
         {
             type: "input",
             message: "What is your intern's email?",
-            name: "internEmail"
+            name: "internEmail",
+            validate: answers => {
+                if (answers.match(/\S+@\S+\.\S+/)) {
+                    return true;
+                }
+                return "Please enter a valid email address.";
+            }
         },
         {
             type: "input",
             message: "What is your intern's school?",
-            name: "internSchool"
+            name: "internSchool",
+            validate: answers => {
+                if (answers !== "") {
+                    return true;
+                }
+                return "Please enter at least one character.";
+            }
         }
     ])
 
@@ -131,6 +207,13 @@ function moreEmployees() {
                 console.log("Thanks for your selection(s)!")
                 const result = render(employees);
                 console.log(result);
+
+                fs.writeFile("team.html", result, err => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    console.log("Your file was successfully written to team.html!")
+                })
             }
         })
 
