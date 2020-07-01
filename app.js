@@ -11,67 +11,46 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
 var employees = [];
-inquirer
-    .prompt([
-        {
-            message: "Please build your team",
-        },
-        {
-            type: "input",
-            message: "What is your manager's name?",
-            name: "managerName"
-        },
-        {
-            type: "input",
-            message: "What is your manager's id?",
-            name: "managerId"
-        },
-        {
-            type: "input",
-            message: "What is your manager's email?",
-            name: "managerEmail"
-        },
-        {
-            type: "input",
-            message: "What is your manager's office number?",
-            name: "managerNumber"
-        }
-    ])
-    .then(function (answers) {
-        var newManager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerNumber);
-        employees.push(newManager);
-        var exit = false;
 
-    })
-
-
-function moreEmployees() {
-
+function manager() {
+    console.log("Please build your team.");
     inquirer
         .prompt([
             {
-                type: "list",
-                message: "Which type of team member would you like to add?",
-                default: "(Use arrow keys)",
-                choices: ["Engineer", "Intern", "I don't want to add any more team members"],
-                name: "addEmployee"
+                type: "input",
+                message: "What is your manager's name?",
+                name: "managerName"
             },
-        ]).then(function (addEmployee) {
-            if (addEmployee.choices === "Engineer") {
-                inquirer
-                    .prompt(engineerQuestions);
-                moreEmployees();
-
-            } else if (addEmployee.choices === "Intern") {
-                inquirer
-                    .prompt(internQuestions);
-                moreEmployees();
-            } else {
-                console.log("Thanks for your selection(s)!")
+            {
+                type: "input",
+                message: "What is your manager's id?",
+                name: "managerId"
+            },
+            {
+                type: "input",
+                message: "What is your manager's email?",
+                name: "managerEmail"
+            },
+            {
+                type: "input",
+                message: "What is your manager's office number?",
+                name: "managerNumber"
             }
+        ])
+        .then(function (answers) {
+            var newManager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerNumber);
+            employees.push(newManager);
+            var exit = false;
+
+            moreEmployees();
+
         })
 
 
+}
+
+
+function moreEmployees() {
 
     const engineerQuestions = ([
         {
@@ -92,14 +71,9 @@ function moreEmployees() {
         {
             type: "input",
             message: "What is your engineer's GitHub username?",
-            name: "engineerGitHub"
+            name: "engineerGithub"
         }
-
-    ]).then(function (answers) {
-        var newEngineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
-        employees.push(newEngineer);
-        var exit = false;
-    })
+    ])
 
     const internQuestions = ([
         {
@@ -122,17 +96,52 @@ function moreEmployees() {
             message: "What is your intern's school?",
             name: "internSchool"
         }
+    ])
 
-    ]).then(function (answers) {
-        var newIntern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
-        employees.push(newIntern);
-        var exit = false;
-    })
+    inquirer
+        .prompt([
+            {
+                type: "list",
+                message: "Which type of team member would you like to add?",
+                default: "(Use arrow keys)",
+                choices: ["Engineer", "Intern", "I don't want to add any more team members"],
+                name: "addEmployee"
+            }
+        ]).then(function (answers) {
+            if (answers.addEmployee === "Engineer") {
+                inquirer
+                    .prompt(engineerQuestions).then(function (answers) {
+                        var newEngineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
+                        employees.push(newEngineer);
+
+                        moreEmployees();
+                    });
+
+
+            } else if (answers.addEmployee === "Intern") {
+                inquirer
+                    .prompt(internQuestions).then(function (answers) {
+                        var newIntern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
+                        employees.push(newIntern);
+
+                        moreEmployees();
+                    });
+
+            } else {
+                console.log("Thanks for your selection(s)!")
+                const result = render(employees);
+                console.log(result);
+            }
+        })
+
+
+
 
 }
 
-moreEmployees();
-const result = render.render(employees);
+manager();
+
+
 
 
 // Write code to use inquirer to gather information about the development team members,
