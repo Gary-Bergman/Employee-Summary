@@ -13,6 +13,7 @@ const render = require("./lib/htmlRenderer");
 // validators
 const valNum = /^[1-9]\d*$/;
 const valEmail = /\S+@\S+\.\S+/;
+const valName = /^[A-Za-z]+$/;
 
 var employees = [];
 
@@ -26,10 +27,10 @@ function manager() {
                 message: "What is your manager's name?",
                 name: "managerName",
                 validate: answers => {
-                    if (answers !== "") {
+                    if (answers.match(valName)) {
                         return true;
                     }
-                    return "Please enter at least one character.";
+                    return "Please enter a valid name.";
                 }
             },
             {
@@ -85,10 +86,10 @@ function moreEmployees() {
             message: "What is your engineer's name?",
             name: "engineerName",
             validate: answers => {
-                if (answers !== "") {
+                if (answers.match(valName)) {
                     return true;
                 }
-                return "Please enter at least one character.";
+                return "Please enter a valid name.";
             }
         },
         {
@@ -132,10 +133,10 @@ function moreEmployees() {
             message: "What is your intern's name?",
             name: "internName",
             validate: answers => {
-                if (answers !== "") {
+                if (answers.match(valName)) {
                     return true;
                 }
-                return "Please enter at least one character.";
+                return "Please enter a valid name.";
             }
         },
         {
@@ -165,10 +166,10 @@ function moreEmployees() {
             message: "What is your intern's school?",
             name: "internSchool",
             validate: answers => {
-                if (answers !== "") {
+                if (answers.match(valName)) {
                     return true;
                 }
-                return "Please enter at least one character.";
+                return "Please enter a valid name.";
             }
         }
     ])
