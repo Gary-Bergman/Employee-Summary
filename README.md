@@ -1,7 +1,7 @@
 # Employee Summary
   
   
-   ## Demo/Link
+   ## Demo
 
    <img src="Assets/Images/Employee Summary.png" alt="Employee Summary Screenshot" width="700">
 
@@ -16,7 +16,7 @@
 
   ## Table of Contents
 
-  *  [Demo/Link](#Demo/Link)
+  *  [Demo](#Demo)
    
   *  [Description](#Description)
 
